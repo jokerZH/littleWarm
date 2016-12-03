@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="DefaultAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/home/joker/logs/vss-console/little-warm.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/home/www/logs/vss-console/little-warm.log.%d{yyyy-MM-dd}
+            </fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d %p [%t] %c{20} %X{traceId:--} %m%n</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+    </appender>
+    <root>
+        <level value="WARN" />
+        <appender-ref ref="DefaultAppender" />
+    </root>
+
+</configuration>
