@@ -24,7 +24,7 @@
     select id, extra from user where id=#{id}
   </select>
 
-  <update id="updateExtra" parameterType="map">
+  <update id="updateUserExtra" parameterType="map">
     update user
       <set>
         extra = #{extra}

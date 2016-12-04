@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.littlewarm.dao.mapper.CommentMapper">
+
+<!--
+  CREATE TABLE `comment` (
+    `user_id` varchar(100) NOT NULL,
+    `topic_id` varchar(100) NOT NULL,
+    `extra` varchar(1000) DEFAULT NULL,
+    `gmt_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`user_id`, `topic_id`),
+    UNIQUE KEY `user_topic` (`user_id`, `topic_id`),
+    CONSTRAINT `FK_USER_ID` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+    CONSTRAINT `FK_TOPIC_ID` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+-->
+
+  <resultMap type="Comment" id="CommentResult">
+    <result property="userId" column="user_id"/>
+    <result property="topicId" column="topic_id"/>
+    <result property="extra" column="extra"/>
+  </resultMap>
+
+
+  <select id="getCommentByUser" parameterType="map" resultMap="CommentResult">
+    select user_id, topic_id, extra from comment where user_id=#{userId}
+  </select>
+
+  <select id="getCommentByTopic" parameterType="map" resultMap="CommentResult">
+    select user_id, topic_id, extra from comment where topic_id=#{topicId}
+  </select>
+
+  <update id="updateCommentExtra" parameterType="map">
+    update comment
+      <set>
+        extra = #{extra}
+      </set>
+    where user_id=#{userId} and topic_id=#{topicId}
+  </update>
+
+
+  <insert id="insertComment" parameterType="Comment">
+    insert into comment(
+      user_id, topic_id, extra
+    ) values (
+      #{userId}, #{topicId}, #{extra}
+    )
+  </insert>
+
+  <delete id="deleteComment" parameterType="map">
+    delete from comment where user_id=#{userId} and topic_id=#{topicId}
+  </delete>
+
+</mapper>
+

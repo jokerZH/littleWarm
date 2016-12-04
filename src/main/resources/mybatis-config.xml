@@ -5,10 +5,16 @@
 <configuration>
 
 <typeAliases>
-  <typeAlias alias="User" type="com.littlewarm.model.User"/>
+    <typeAlias alias="User" type="com.littlewarm.model.User"/>
+    <typeAlias alias="Topic" type="com.littlewarm.model.Topic"/>
+    <typeAlias alias="Comment" type="com.littlewarm.model.Comment"/>
+    <typeAlias alias="topicRelation" type="com.littlewarm.model.TopicRelation"/>
 </typeAliases>
 
 <mappers>
-   <mapper resource="mapper/user.xml" />
+    <mapper resource="mapper/user.xml" />
+    <mapper resource="mapper/topic.xml" />
+    <mapper resource="mapper/comment.xml" />
+    <mapper resource="mapper/topicRelation.xml" />
 </mappers>
 </configuration>

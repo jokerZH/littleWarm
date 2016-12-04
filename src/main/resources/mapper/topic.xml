@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.littlewarm.dao.mapper.TopicMapper">
+
+<!--
+  CREATE TABLE `topic` (
+    `id` varchar(100) NOT NULL,
+    `desc` varchar(1000) NOT NULL,
+    `extra` varchar(1000) DEFAULT NULL,
+    `gmt_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `id` (`id`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+-->
+
+  <resultMap type="Topic" id="TopicResult">
+    <result property="id" column="id"/>
+    <result property="desc" column="desc"/>
+    <result property="extra" column="extra"/>
+  </resultMap>
+
+
+  <select id="getTopic" parameterType="map" resultMap="TopicResult">
+    select id, `desc`, extra from topic where id=#{id}
+  </select>
+
+  <update id="updateTopicExtra" parameterType="map">
+    update topic
+      <set>
+        extra = #{extra}
+      </set>
+    where id=#{id}
+  </update>
+
+  <update id="updateTopicDesc" parameterType="map">
+    update topic
+      <set>
+        `desc` = #{desc}
+      </set>
+    where id=#{id}
+  </update>
+
+  <insert id="insertTopic" parameterType="Topic">
+    insert into topic(
+      id, `desc`, extra
+    ) values (
+      #{id}, #{desc}, #{extra}
+    )
+  </insert>
+
+  <delete id="deleteTopic" parameterType="map">
+    delete from topic where id=#{id}
+  </delete>
+
+</mapper>

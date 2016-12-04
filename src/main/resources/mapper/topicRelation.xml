@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.littlewarm.dao.mapper.TopicRelationMapper">
+
+<!--
+  CREATE TABLE `topic_relation` (
+    `src_id` varchar(100) NOT NULL,
+    `des_id` varchar(100) NOT NULL,
+    `extra` varchar(1000) DEFAULT NULL,
+    `gmt_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`src_id`, `des_id`),
+    UNIQUE KEY `src_des` (`src_id`, `des_id`),
+    CONSTRAINT `FK_SRC_ID` FOREIGN KEY (`src_id`) REFERENCES `topic` (`id`),
+    CONSTRAINT `FK_DES_ID` FOREIGN KEY (`des_id`) REFERENCES `topic` (`id`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+-->
+
+  <resultMap type="TopicRelation" id="TopicRelationResult">
+    <result property="srcId" column="src_id"/>
+    <result property="desId" column="des_id"/>
+    <result property="extra" column="extra"/>
+  </resultMap>
+
+
+  <select id="getTopicRelationBySrc" parameterType="map" resultMap="TopicRelationResult">
+    select src_id, des_id, extra from topic_relation where src_id=#{srcId}
+  </select>
+
+  <select id="getTopicRelationByDes" parameterType="map" resultMap="TopicRelationResult">
+    select src_id, des_id, extra from topic_relation where des_id=#{desId}
+  </select>
+
+  <update id="updateTopicRelationExtra" parameterType="map">
+    update topic_relation
+      <set>
+        extra = #{extra}
+      </set>
+    where src_id=#{srcId} and des_id=#{desId}
+  </update>
+
+
+  <insert id="insertTopicRelation" parameterType="TopicRelation">
+    insert into topic_relation (
+      src_id, des_id, extra
+    ) values (
+      #{srcId}, #{desId}, #{extra}
+    )
+  </insert>
+
+  <delete id="deleteTopicRelation" parameterType="map">
+    delete from topic_relation where src_id=#{srcId} and des_id=#{desId}
+  </delete>
+
+</mapper>
