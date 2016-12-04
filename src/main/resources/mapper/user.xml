@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.littlewarm.dao.mapper.UserMapper">
+
+<!--
+  CREATE TABLE `user` (
+    `id` varchar(100) NOT NULL,
+    `extra` varchar(1000) DEFAULT NULL,
+    `gmt_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `gmt_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `id` (`id`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+-->
+
+  <resultMap type="User" id="UserResult">
+    <result property="id" column="id"/>
+    <result property="extra" column="extra"/>
+  </resultMap>
+
+
+  <select id="getUser" parameterType="map" resultMap="UserResult">
+    select id, extra from user where id=#{id}
+  </select>
+
+  <update id="updateExtra" parameterType="map">
+    update user
+      <set>
+        extra = #{extra}
+      </set>
+    where id=#{id}
+  </update>
+
+  <insert id="insertUser" parameterType="User">
+    insert into user(
+      id, extra
+    ) values (
+      #{id}, #{extra}
+    )
+  </insert>
+
+  <delete id="deleteUser" parameterType="map">
+    delete from user where id=#{id}
+  </delete>
+
+</mapper>
